@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sampai Jumpa, Sayangku</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f5efe6;
+    --blush: #e8c4b8;
+    --rose: #c97b6e;
+    --mauve: #8b5e6a;
+    --deep: #3d2b35;
+    --gold: #c9a96e;
+    --mist: rgba(245,239,230,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--deep);
+    color: var(--cream);
+    font-family: 'Jost', sans-serif;
+    font-weight: 200;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── Floating petals ── */
+  .petal {
+    position: fixed;
+    width: 8px; height: 12px;
+    background: radial-gradient(ellipse at 40% 30%, #e8c4b8cc, #c97b6e55);
+    border-radius: 50% 50% 50% 10% / 60% 60% 40% 40%;
+    pointer-events: none;
+    z-index: 0;
+    animation: fall linear infinite;
+    opacity: 0;
+  }
+  @keyframes fall {
+    0%   { transform: translateY(-20px) rotate(0deg) translateX(0); opacity: 0; }
+    10%  { opacity: 0.7; }
+    90%  { opacity: 0.4; }
+    100% { transform: translateY(105vh) rotate(360deg) translateX(40px); opacity: 0; }
+  }
+
+  /* ── Hero ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    padding: 60px 24px;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 10%, #6b3a4822 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, #c97b6e18 0%, transparent 60%),
+      var(--deep);
+  }
+
+  .hero-eyebrow {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 0.7rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0;
+    animation: fadeUp 1s ease 0.3s forwards;
+    margin-bottom: 28px;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(3rem, 9vw, 7.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--cream);
+    opacity: 0;
+    animation: fadeUp 1.2s ease 0.6s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--blush);
+  }
+
+  .divider-line {
+    width: 1px;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    margin: 40px auto;
+    opacity: 0;
+    animation: fadeIn 1.5s ease 1.2s forwards;
+  }
+
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    color: var(--blush);
+    max-width: 520px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 1s ease 1.5s forwards;
+  }
+
+  /* ── Scroll hint ── */
+  .scroll-hint {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s ease 2.5s forwards;
+  }
+  .scroll-hint span {
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+  .scroll-dot {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: pulse-line 2s ease-in-out infinite;
+  }
+  @keyframes pulse-line {
+    0%,100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* ── Sections ── */
+  section {
+    position: relative;
+    z-index: 1;
+    padding: 100px 24px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+    display: block;
+  }
+
+  /* ── Letter ── */
+  #letter {
+    border-left: 1px solid #c97b6e44;
+    padding-left: 40px;
+  }
+
+  .letter-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+    line-height: 1.85;
+    color: #ecddd4;
+    font-weight: 300;
+  }
+
+  .letter-body p + p { margin-top: 1.4em; }
+
+  .letter-body .highlight {
+    font-style: italic;
+    color: var(--blush);
+  }
+
+  /* ── Memories grid ── */
+  #memories {
+    text-align: center;
+  }
+
+  .memory-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 48px;
+    background: #c97b6e22;
+  }
+
+  .memory-card {
+    background: var(--deep);
+    padding: 40px 24px;
+    transition: background 0.4s ease;
+    cursor: default;
+  }
+
+  .memory-card:hover {
+    background: #4a2d3a;
+  }
+
+  .memory-icon {
+    font-size: 1.6rem;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .memory-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--blush);
+    margin-bottom: 10px;
+  }
+
+  .memory-text {
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: #a8887a;
+    letter-spacing: 0.03em;
+  }
+
+  /* ── Quote ── */
+  #quote {
+    text-align: center;
+    padding: 80px 24px 100px;
+    max-width: 680px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 8rem;
+    line-height: 0;
+    color: var(--rose);
+    opacity: 0.2;
+    position: absolute;
+    top: 60px;
+    left: 20px;
+    font-style: italic;
+  }
+
+  .quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+    line-height: 1.6;
+    color: var(--cream);
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+  }
+
+  .quote-author {
+    margin-top: 28px;
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  /* ── Final farewell ── */
+  #farewell {
+    text-align: center;
+    padding: 100px 24px 140px;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 100%, #6b3a4830 0%, transparent 70%);
+  }
+
+  .farewell-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 6vw, 4.5rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.2;
+  }
+
+  .farewell-title em {
+    font-style: italic;
+    color: var(--blush);
+  }
+
+  .farewell-message {
+    margin: 32px auto 0;
+    max-width: 480px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #a8887a;
+  }
+
+  .signature {
+    margin-top: 56px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.8rem;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+  }
+
+  .heart-row {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .heart-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--rose);
+    animation: heartbeat 2s ease-in-out infinite;
+  }
+  .heart-dot:nth-child(2) { animation-delay: 0.3s; background: var(--blush); }
+  .heart-dot:nth-child(3) { animation-delay: 0.6s; background: var(--gold); }
+
+  @keyframes heartbeat {
+    0%,100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.6); opacity: 1; }
+  }
+
+  /* ── Utilities ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Horizontal rule ornament ── */
+  .ornament {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0 auto 48px;
+    max-width: 320px;
+  }
+  .ornament-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold));
+  }
+  .ornament-line:last-child {
+    background: linear-gradient(to left, transparent, var(--gold));
+  }
+  .ornament-diamond {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 600px) {
+    .memory-grid { grid-template-columns: 1fr; }
+    #letter { padding-left: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating petals -->
+<script>
+  (function(){
+    for(let i=0;i<18;i++){
+      const p=document.createElement('div');
+      p.className='petal';
+      p.style.left=Math.random()*100+'vw';
+      p.style.width=(6+Math.random()*8)+'px';
+      p.style.height=(9+Math.random()*10)+'px';
+      p.style.animationDuration=(8+Math.random()*14)+'s';
+      p.style.animationDelay=(Math.random()*12)+'s';
+      p.style.opacity='0';
+      document.body.appendChild(p);
+    }
+  })();
+</script>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <p class="hero-eyebrow">Dari Damar &nbsp;·&nbsp; Untuk Wanda</p>
+  <h1 class="hero-title">Sampai Jumpa,<br><em>Wanda</em></h1>
+  <div class="divider-line"></div>
+  <p class="hero-sub">Ada hal-hal yang tak perlu diucapkan — cukup dirasakan, disimpan, dan dibawa selamanya.</p>
+
+  <div class="scroll-hint">
+    <span>gulir ke bawah</span>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<!-- ══ LETTER ══ -->
+<section id="letter">
+  <span class="section-label reveal">— Surat Damar untuk Wanda</span>
+  <div class="letter-body reveal">
+    <p>Hei, kamu yang selalu hadir di momen paling biasa dan membuatnya jadi luar biasa.</p>
+    <p>Kita tahu bahwa <span class="highlight">perpisahan bukan akhir dari segalanya</span> — ia hanya jeda panjang antara dua jiwa yang pernah saling mengenal.</p>
+    <p>Aku ingin kamu tahu: setiap tawa yang kita bagi, setiap kata yang kita tukar, setiap diam yang terasa nyaman — semua itu membekas, dan tak akan pernah pergi.</p>
+    <p>Pergilah dengan ringan. Pergilah dengan berani. <span class="highlight">Dunia di luar sana menunggumu dengan tangan terbuka.</span></p>
+  </div>
+</section>
+
+<!-- ══ MEMORIES ══ -->
+<section id="memories">
+  <div class="ornament reveal">
+    <div class="ornament-line"></div>
+    <div class="ornament-diamond"></div>
+    <div class="ornament-line"></div>
+  </div>
+  <span class="section-label reveal">— Kenangan yang kita simpan</span>
+
+  <div class="memory-grid reveal">
+    <div class="memory-card">
+      <span class="memory-icon">🌸</span>
+      <div class="memory-title">Cerita Pagi</div>
+      <div class="memory-text">Percakapan ringan yang membuat hari terasa lebih berwarna dari biasanya.</div>
+    </div>
+    <div class="memory-card">
+      <span class="memory-icon">🌙</span>
+      <div class="memory-title">Malam yang Panjang</div>
+      <div class="memory-text">Ketika waktu terasa berhenti dan hanya kita yang ada di dunia itu.</div>
+    </div>
+    <div class="memory-card">
+      <span class="memory-icon">✨</span>
+      <div class="memory-title">Momen Kecil</div>
+      <div class="memory-text">Detail-detail sepele yang diam-diam kusimpan rapat dalam ingatan.</div>
+    </div>
+    <div class="memory-card">
+      <span class="memory-icon">🎵</span>
+      <div class="memory-title">Lagu Kita</div>
+      <div class="memory-text">Setiap kali melodi itu mengalun, wajahmu yang pertama kali muncul.</div>
+    </div>
+    <div class="memory-card">
+      <span class="memory-icon">🌿</span>
+      <div class="memory-title">Ketenangan</div>
+      <div class="memory-text">Betapa nyamannya diam bersamamu, tanpa perlu mengisi setiap keheningan.</div>
+    </div>
+    <div class="memory-card">
+      <span class="memory-icon">💌</span>
+      <div class="memory-title">Kata-kata Tulus</div>
+      <div class="memory-text">Yang kamu ucapkan di saat yang paling tepat, tanpa kamu sadari betapa berartinya.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ QUOTE ══ -->
+<section id="quote">
+  <div class="quote-mark reveal">"</div>
+  <p class="quote-text reveal">Orang-orang yang baik tidak benar-benar pergi — mereka berubah menjadi bagian dari siapa kita hari ini.</p>
+  <p class="quote-author reveal">— Damar, untuk Wanda</p>
+</section>
+
+<!-- ══ FAREWELL ══ -->
+<section id="farewell">
+  <div class="ornament reveal">
+    <div class="ornament-line"></div>
+    <div class="ornament-diamond"></div>
+    <div class="ornament-line"></div>
+  </div>
+
+  <h2 class="farewell-title reveal">Jadilah <em>bahagia,</em><br>di mana pun kamu berada.</h2>
+
+  <p class="farewell-message reveal">
+    Ini bukan selamat tinggal yang sedih. Ini adalah ucapan terima kasih yang paling tulus — atas semua yang pernah kamu beri, sadar maupun tidak.
+  </p>
+
+  <div class="signature reveal">~ Damar</div>
+
+  <div class="heart-row reveal">
+    <div class="heart-dot"></div>
+    <div class="heart-dot"></div>
+    <div class="heart-dot"></div>
+  </div>
+</section>
+
+<script>
+  // Intersection observer for reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if(entry.isIntersecting){
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
